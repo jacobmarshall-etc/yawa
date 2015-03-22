@@ -1,7 +1,12 @@
-$primary-color: black
-$background-color: yellow
+@import url("http://brick.a.ssl.fastly.net/Bitter:400,600")
+@import "../bower_components/colors/sass/colors.scss"
+
+$primary-color: $black
+$background-color: $yellow
+$font-stack: Bitter, Helvetica, sans-serif
 
 body
   background: $background-color
-  .wrapper
-    color: $primary-color
+.wrapper
+  color: $primary-color
+  font-family: $font-stack
