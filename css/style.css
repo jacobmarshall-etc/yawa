@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Bitter:400,700,400italic);
+@import url(http://brick.a.ssl.fastly.net/Bitter:400,700);
 /***
 
    colors.css v2.0.0
@@ -287,3 +287,5 @@ body {
 .wrapper {
   color: #111;
   font-family: "Bitter", Helvetica, sans-serif; }
+  .wrapper h2 {
+    float: right; }
