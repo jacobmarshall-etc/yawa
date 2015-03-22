@@ -19,7 +19,7 @@ function getJSON(callback) {
 function getAPIKey(service, callback) {
 	getJSON(function(key) {
 		// service can either be google or forecast
-		return(key[service]);
+		callback(key[service]);
 	});
 }
 
