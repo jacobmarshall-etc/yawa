@@ -1,35 +1,29 @@
-var http = require('http');
-var fs = require('fs');
-var path = require('path');
+var https = require('https');
+var keys  = require('../keys.json');
 
-function readFile(fileName, callback) {
-var filePath = path.join(__dirname, fileName);
+function getInfo(location, callback) {
+	var formattedLocation = location.split(/[ ,]+/).join('+');
+	var url = 'https://maps.googleapis.com/maps/api/geocode/json?addresponses=' + formattedLocation + '&key=' + keys.google;
 
-fs.readFile(filePath, {encoding: 'utf-8'}, function (error, data) {
-		return callback(error || data);
+	// Make an HTTP requestuest to the Google Maps API
+	var request = https.request(url, function (response) {
+		var body = '';
+
+		// When a new chunk of data is send back, append to `body`
+		response.on('data', function (chunk) {
+			body += chunk;
+		});
+
+		// When the response has finished coming back, parse and pass through
+		// the data to the callback (function).
+		response.on('end', function () {
+			callback(JSON.parse(body));
+		});
 	});
+
+	request.end();
 }
 
-function getJSON(callback) {
-		readFile('../keys.json', function(errorOrData) {
-		callback(JSON.parse(errorOrData));
-	});
-}
-
-function getAPIKey(service, callback) {
-	getJSON(function(key) {
-		// service can either be google or forecast
-		callback(key[service]);
-	});
-}
-
-
-// this isn't working
-getAPIKey('google', function(key) {
-	console.log(key);
+getInfo("12345 41st Ave, Vancouver, BC, Canada", function (info) {
+	console.log(info);
 });
-
-function getInfo(location) {
-	var formattedLocation = location.split(/[ ,]+/).join('+')
-	var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + formattedLocation + '&key=' + apiKey
-}
